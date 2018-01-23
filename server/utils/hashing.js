@@ -30,8 +30,13 @@ const updateURL = (url) => {
 	return 'http://short.ly/' + shortenedHash;
 }
 
+const checkCurrentCache = () => {
+	return websiteToShortURLCache;
+}
+
 module.exports = {
 	hashURL: hashURL,
 	destroyURL: destroyURL,
-	updateURL: updateURL
+	updateURL: updateURL,
+	checkCurrentCache: checkCurrentCache
 }

@@ -19892,13 +19892,25 @@ var InputBar = function (_Component) {
 			formClassName: 'notClicked',
 			inputValue: 'Enter your link'
 		};
+
+		_this.endErrorAnimation = _this.endErrorAnimation.bind(_this);
 		return _this;
 	}
 
 	_createClass(InputBar, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var element = this.refs.form;
+			element.addEventListener('animationend', this.endErrorAnimation);
+		}
+	}, {
 		key: 'onURLChange',
 		value: function onURLChange(event) {
-			this.setState({ inputValue: event.target.value });
+			if (this.state.inputValue.length === 0) {
+				this.setState({ inputValue: 'http://' + event.target.value });
+			} else {
+				this.setState({ inputValue: event.target.value });
+			}
 		}
 	}, {
 		key: 'onSubmit',
@@ -19906,17 +19918,26 @@ var InputBar = function (_Component) {
 			this.reqShortURL(this.state.inputValue);
 		}
 	}, {
+		key: 'endErrorAnimation',
+		value: function endErrorAnimation() {
+			this.setState({ formClassName: 'clicked' });
+		}
+	}, {
 		key: 'reqShortURL',
 		value: function reqShortURL(url) {
 			var _this2 = this;
 
-			_axios2.default.post('/v1/links', {
-				'url': url
-			}).then(function (res) {
-				_this2.setState({ inputValue: res.data });
-			}).catch(function (err) {
-				console.log(err);
-			});
+			if (this.state.inputValue.substr(this.state.inputValue.length - 4, 4) === '.com') {
+				_axios2.default.post('/v1/links', {
+					'url': url
+				}).then(function (res) {
+					_this2.setState({ inputValue: res.data });
+				}).catch(function (err) {
+					console.log(err);
+				});
+			} else {
+				this.setState({ formClassName: 'error clicked' });
+			}
 		}
 	}, {
 		key: 'onInputEnter',
@@ -19945,7 +19966,7 @@ var InputBar = function (_Component) {
 		value: function render() {
 			return _react2.default.createElement(
 				'form',
-				{ className: this.state.inputClassName },
+				{ ref: 'form', className: this.state.formClassName },
 				_react2.default.createElement('input', { value: this.state.inputValue, className: this.state.inputClassName, onClick: this.onInputEnter.bind(this), onChange: this.onURLChange.bind(this), onBlur: this.onInputLeave.bind(this) }),
 				_react2.default.createElement(
 					'button',
@@ -22285,7 +22306,7 @@ exports = module.exports = __webpack_require__(27)(false);
 
 
 // module
-exports.push([module.i, "form {\r\n\ttop: 50%;\r\n\tleft: 50%;\r\n\tposition: fixed;\r\n\twidth: 50%;\r\n\theight: 50%;\r\n\tmargin-left: -18%;\r\n\tmargin-top: -4%;\r\n}\r\n\r\ninput {\r\n\tborder: none;\r\n\tborder-bottom: 1px solid blue;\r\n\tdisplay: block;\r\n\tfloat: left;\r\n\toutline-width: 0;\r\n\twidth: 40%;\r\n\theight: 10%;\r\n\tfont-size: 38px;\r\n\tposition: relative\r\n}\r\n\r\ninput.clicked {\r\n  width: 80%;\r\n  transition: width 400ms ease-in;\t\r\n}\r\n\r\nform.clicked {\r\n\tmargin-left: -24%;\r\n\ttransition: margin-left 400ms ease-in;\t\r\n}\r\n\r\ninput.notClicked {\r\n  width: 40%;\r\n  transition: width 400ms ease-in;\t\r\n}\r\n\r\nform.notClicked {\r\n\tmargin-left: -18%;\r\n\ttransition: margin-left 400ms ease-in;\t\r\n}\r\n\r\nbutton {\r\n\tborder: none;\r\n\tbackground-color: blue;\r\n\tdisplay: block;\r\n\tfloat: left;\r\n\tcolor: white;\r\n\theight: 10%;\r\n\twidth: 20%;\r\n\tposition: relative;\r\n}\r\n\r\nbutton:hover {\r\n\tbackground: #383;\r\n}", ""]);
+exports.push([module.i, "form {\r\n\ttop: 50%;\r\n\tleft: 50%;\r\n\tposition: fixed;\r\n\twidth: 50%;\r\n\theight: 50%;\r\n\tmargin-left: -18%;\r\n\tmargin-top: -4%;\r\n}\r\n\r\ninput {\r\n\tborder: none;\r\n\tborder-bottom: 1px solid #4ABDAC;\r\n\tdisplay: block;\r\n\tfloat: left;\r\n\toutline-width: 0;\r\n\twidth: 40%;\r\n\theight: 10%;\r\n\tfont-size: 38px;\r\n\tposition: relative\r\n}\r\n\r\ninput.clicked {\r\n  width: 80%;\r\n  transition: width 400ms ease-in;\t\r\n}\r\n\r\nform.clicked {\r\n\tmargin-left: -24%;\r\n\ttransition: margin-left 400ms ease-in;\t\r\n}\r\n\r\ninput.notClicked {\r\n  width: 40%;\r\n  transition: width 400ms ease-in;\t\r\n}\r\n\r\nform.notClicked {\r\n\tmargin-left: -18%;\r\n\ttransition: margin-left 400ms ease-in;\t\r\n}\r\n\r\n\r\nform.error {\r\n\t-webkit-animation: shake 0.4s linear;\r\n\t-moz-animation: shake 0.4s linear;\r\n\t-o-animation: shake 0.4s linear;\r\n\tanimation: shake 0.4s linear;\r\n}\r\n@-webkit-keyframes shake {\r\n\t0% { -webkit-transform: translate(15px); }\r\n\t20% { -webkit-transform: translate(-30px); }\r\n\t40% { -webkit-transform: translate(15px); }\r\n\t60% { -webkit-transform: translate(-15px); }\r\n\t80% { -webkit-transform: translate(8px); }\r\n\t100% { -webkit-transform: translate(0px); }\r\n}\r\n@-moz-keyframes shake {\r\n\t0% { -moz-transform: translate(15px); }\r\n\t20% { -moz-transform: translate(-30px); }\r\n\t40% { -moz-transform: translate(15px); }\r\n\t60% { -moz-transform: translate(-15px); }\r\n\t80% { -moz-transform: translate(8px); }\r\n\t100% { -moz-transform: translate(0px); }\r\n}\r\n@-o-keyframes shake {\r\n\t0% { -o-transform: translate(15px); }\r\n\t20% { -o-transform: translate(-30px); }\r\n\t40% { -o-transform: translate(15px); }\r\n\t60% { -o-transform: translate(-15px); }\r\n\t80% { -o-transform: translate(8px); }\r\n\t100% { -o-transform: translate(0px); }\r\n}\r\n\r\n@keyframes shake {\r\n\t0% { transform: translate(15px); }\r\n\t20% { transform: translate(-30px); }\r\n\t40% { transform: translate(15px); }\r\n\t60% { transform: translate(-15px); }\r\n\t80% { transform: translate(8px); }\r\n\t100% { transform: translate(0px); }\r\n}\r\n\r\nbutton {\r\n\tborder: none;\r\n\tborder-radius: 5px;\r\n\tbackground-color: #4ABDAC;\r\n\tdisplay: block;\r\n\tfloat: left;\r\n\tcolor: white;\r\n\theight: 10%;\r\n\twidth: 20%;\r\n\tposition: relative;\r\n}\r\n\r\nbutton:hover {\r\n\tbackground: #007849;\r\n}", ""]);
 
 // exports
 
