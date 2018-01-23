@@ -4,7 +4,6 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import './InputBar.css'
 
 class InputBar extends Component {
-
 	constructor(props) {
 		super(props)
 		this.state = {
