@@ -25,7 +25,7 @@ export default class App extends Component {
 	}
 
 	async createShortURL(url) {
-		 return axios.post('/v1/links', {
+		 return axios.post('/v1/link', {
 			'url': url
 		})
 		.then((res) => {

@@ -14,6 +14,8 @@ app.use(express.static(path.resolve(PARENT_DIR)));
 
 // parse data as JSON
 app.use(bodyParser.json());
+// parse application/x-www-form-urlencoded 
+app.use(bodyParser.urlencoded({ extended: false }))
 // log all request in the Apache combined format to STDOUT
 // app.use(morgan('combined'));
 
@@ -30,12 +32,11 @@ app.get('/', (req, res) => {
 
 app.get('/v1/link', async (req, res) => {
 	const longLink = await utils.getURL(req.query.url)
-	console.log(req.query.url, 'fdsajkl;fsdjklfdsf;jdask')
+	console.log(req, longLink)
 	res.status(200).send(longLink)
 })
 
-app.post('/v1/links', async (req, res) => {
-	console.log('links')
+app.post('/v1/link', async (req, res) => {
 	if(!req.body.url) {
 		res.status(400).send('URL is missing from the request.');
 		return;

@@ -28819,7 +28819,7 @@ var App = function (_Component) {
 					while (1) {
 						switch (_context.prev = _context.next) {
 							case 0:
-								return _context.abrupt('return', _axios2.default.post('/v1/links', {
+								return _context.abrupt('return', _axios2.default.post('/v1/link', {
 									'url': url
 								}).then(function (res) {
 									_this3.setState({ linksList: res.data.linksList }, function () {
