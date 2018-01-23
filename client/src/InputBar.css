@@ -1,0 +1,46 @@
+form {
+	top: 50%;
+	left: 50%;
+	position: fixed;
+	width: 50%;
+	height: 50%;
+	margin-left: -18%;
+	margin-top: -4%;
+}
+
+input {
+	border: none;
+	border-bottom: 1px solid blue;
+	display: block;
+	float: left;
+	outline-width: 0;
+	width: 40%;
+	height: 10%;
+	font-size: 38px;
+	position: relative
+}
+
+button {
+	border: none;
+	background-color: blue;
+	display: block;
+	float: left;
+	color: white;
+	height: 10%;
+	width: 20%;
+	position: relative;
+}
+
+button:hover {
+	background: #383;
+}
+
+input.clicked {
+  width: 80%;
+  transition: width 400ms ease-in;	
+}
+
+form.clicked {
+	margin-left: -24%;
+	transition: margin-left 400ms ease-in;	
+}
