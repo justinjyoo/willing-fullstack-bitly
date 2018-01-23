@@ -18294,10 +18294,6 @@ var _InputBar = __webpack_require__(29);
 
 var _InputBar2 = _interopRequireDefault(_InputBar);
 
-var _Result = __webpack_require__(55);
-
-var _Result2 = _interopRequireDefault(_Result);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18321,6 +18317,7 @@ var App = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
+                'Welcome to short.ly!',
                 _react2.default.createElement(_InputBar2.default, null)
             );
         }
@@ -20817,82 +20814,9 @@ function getTransitionProperties() {
 /* 52 */,
 /* 53 */,
 /* 54 */,
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _react = __webpack_require__(2);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactTransitionGroup = __webpack_require__(39);
-
-__webpack_require__(56);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Result(props) {
-	return _react2.default.createElement(
-		'div',
-		{ className: 'result' },
-		props.result
-	);
-}
-
-exports.default = Result;
-
-/***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(57);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(33)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/css-loader/index.js!./Result.css", function() {
-			var newContent = require("!!../../node_modules/css-loader/index.js!./Result.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(32)(false);
-// imports
-
-
-// module
-exports.push([module.i, "div.result {\r\n\tposition: fixed;\r\n\ttop: 60%;\r\n\tleft: 32%;\r\n\tfont-size: 40px;\r\n}", ""]);
-
-// exports
-
-
-/***/ }),
+/* 55 */,
+/* 56 */,
+/* 57 */,
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 

@@ -21,7 +21,6 @@ app.get('/', (req, res) => {
 })
 
 app.post('/v1/links', async (req, res) => {
-
 	if(!req.body.url) {
 		res.status(400).send('URL is missing from the request.');
 		return;
