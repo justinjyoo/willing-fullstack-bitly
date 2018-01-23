@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
-import InputBar from './InputBar.jsx'
+import InputBar from './InputBar.jsx';
+import Result from './Result.jsx';
 
 
 export default class App extends Component {
     render () {
-        return <InputBar />
+        return (
+    		<div>
+        		<InputBar />
+        	</div>
+        )
     }
 }

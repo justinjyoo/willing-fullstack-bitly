@@ -14,6 +14,8 @@
   "description": "Fullstack Bitly app for Willing.com",
   "main": "client/app.js",
   "scripts": {
+    "start": "npm run open",
+    "open": "concurrently \"npm install\" \"http-server -a localhost -p 8889\" \"opener http://localhost:8889\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack/webpack.dev.config.js"
   },
@@ -28,8 +30,13 @@
   },
   "homepage": "https://github.com/justinjyoo/willing-fullstack-bitly#readme",
   "dependencies": {
+    "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "hashids": "^1.1.4",
+    "morgan": "^1.9.0",
+    "opener": "^1.4.3",
+    "path": "^0.12.7",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-transition-group": "^1.2.1",
@@ -45,7 +52,9 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
+    "concurrently": "^3.5.1",
     "css-loader": "^0.28.9",
+    "http-server": "^0.11.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "nodemon": "^1.14.11",
