@@ -4,5 +4,12 @@ h1 {
 	top: 25%;
 	left: 50%;
 	margin-left: -196.33px;
+	position: absolute;
+}
+
+div.container {
+	overflow: auto;
+	height: 100%;
+	width: 100%;
 	position: fixed;
 }

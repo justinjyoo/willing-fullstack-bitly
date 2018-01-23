@@ -8,9 +8,7 @@ const APP_DIR = path.resolve(PARENT_DIR, 'client/dist');
 
 
 module.exports = {
-    entry: [
-        path.resolve(BUILD_DIR, 'index.jsx')
-    ],
+    entry: [ 'babel-polyfill', path.resolve(BUILD_DIR, 'index.jsx') ],
     module: {
         loaders: [{
             test: /\.(js|jsx)$/,

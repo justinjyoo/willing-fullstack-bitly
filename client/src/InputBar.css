@@ -1,7 +1,7 @@
 form {
 	top: 50%;
 	left: 50%;
-	position: fixed;
+	position: absolute;
 	width: 50%;
 	height: 50%;
 	margin-left: -18%;

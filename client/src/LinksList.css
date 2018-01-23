@@ -1,0 +1,27 @@
+ul {
+    list-style-type: none;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    width: 60%;
+    margin-left: -16%;
+    font-family: Arial;
+    font-size: 20px;
+}
+
+li {
+	height: 20px;
+	margin-top: 10px;
+}
+
+button.list {
+	width:80px;
+	height: 20px;
+	display: table-cell;
+	font-family: Arial;
+	font-size: 14px;
+	text-align: center;
+	line-height: 4px;
+	margin-right: 10px;
+	padding: 0px;
+}
