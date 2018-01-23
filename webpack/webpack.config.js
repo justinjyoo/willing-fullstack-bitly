@@ -1,15 +1,15 @@
 const webpack = require('webpack');
 const path = require('path');
 
-const parentDir = path.join(__dirname, '../');
-const BUILD_DIR = path.resolve(parentDir, 'client/src');
-const APP_DIR = path.resolve(parentDir, 'client/dist');
+const PARENT_DIR = path.join(__dirname, '../');
+const BUILD_DIR = path.resolve(PARENT_DIR, 'client/src');
+const APP_DIR = path.resolve(PARENT_DIR, 'client/dist');
 
 
 
 module.exports = {
     entry: [
-        path.join(BUILD_DIR, 'index.jsx')
+        path.resolve(BUILD_DIR, 'index.jsx')
     ],
     module: {
         loaders: [{

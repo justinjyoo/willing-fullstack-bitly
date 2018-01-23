@@ -24,10 +24,11 @@ app.post('/v1/links', async (req, res) => {
 	if(!req.body.url) {
 		res.status(400).send('URL is missing from the request.');
 		return;
-	}
+	} 
 
 	try {
 		const shortenedURL = await utils.hashURL(req.body.url);
+		console.log(shortenedURL)
 		res.status(201).send(shortenedURL);
 		return;
 	} catch (e) {

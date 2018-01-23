@@ -11,21 +11,27 @@ let hashids = new Hashids("we'd like to shorten the urls!");
 // start at 1,000,000 count to ensure a 5-digit URL hash
 let urlCount = 1000000;
 
-exports.hashURL = (url) => {
+const hashURL = (url) => {
 	if( websiteToShortURLCache[url] === undefined ) {
-		updateURL(url);
+		return updateURL(url);
 	}
 
 	return 'http://short.ly/' + websiteToShortURLCache[url];
 }
 
-exports.destroyURL = (url) => {
+const destroyURL = (url) => {
 	websiteToShortURLCache[url] = undefined;
 }
 
-exports.updateURL = (url) => {
+const updateURL = (url) => {
 	let shortenedHash = hashids.encode(urlCount++);
 	shortURLtoWebsiteCache[shortenedHash] = url;
 	websiteToShortURLCache[url] = shortenedHash;
-	return shortenedHash;
+	return 'http://short.ly/' + shortenedHash;
+}
+
+module.exports = {
+	hashURL: hashURL,
+	destroyURL: destroyURL,
+	updateURL: updateURL
 }
