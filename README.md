@@ -1,6 +1,6 @@
 # willing-fullstack-bitly
 
-URl Shortener - Full-stack app demo
+URl Shortener Full-stack app demo
 
 ## Tech Stack
   * [React](https://github.com/reactjs)
