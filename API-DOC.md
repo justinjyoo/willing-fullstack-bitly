@@ -43,11 +43,11 @@ POST /v1/link
 ### Example Response
 
 ```json
-Status: 200 OK
+Status: 201 OK
 
 {
     "addedLink": "https://short.ly/4pNGR",
-    "linksList": {
+    "allLinks": {
         "https://wwww.facebook.com": "https://short.ly/4pNGR",
         "https://google.com": "https://short.ly/mBaRj"
     }
@@ -75,11 +75,10 @@ DELETE /v1/link
 ### Example Response
 
 ```json
-Status: 200 OK
+Status: 202 OK
 
 {
-    "addedLink": "https://short.ly/4pNGR",
-    "linksList": {
+    "allLinks": {
         "https://www.google.com": "https://short.ly/mBaRj"
     }
 }
