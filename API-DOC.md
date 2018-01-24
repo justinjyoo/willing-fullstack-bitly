@@ -12,6 +12,19 @@
 ```
 GET /v1/link
 ```
+
+### Input
+
+|Name|Type|Description|
+|---|---|---|
+|url|string|Hashed URL to retrieve.|
+
+```json
+{
+  "url": "https://short.ly/4pNGR"
+}
+```
+
 ### Example Response
 
 ```json
