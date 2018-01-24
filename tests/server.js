@@ -5,7 +5,7 @@ const app = require('../server/server');
 process.env.NODE_ENV = 'test';
 
 describe('ALL /', () => {
-	it('should response to GET / with the static asset home page', () => {
+	it('should respond to GET / with the static asset home page', () => {
 		return request(app)
 		.get('/')
 		.then( res => {
@@ -32,7 +32,7 @@ describe('GET /v1/link', () => {
 		})
 	})
 
-	it('should response to GET /v1/link with a shortened link', () => {
+	it('should respond to GET /v1/link with a shortened link', () => {
 		return request(app)
 		.get('/v1/link')
 		.query({
@@ -45,7 +45,7 @@ describe('GET /v1/link', () => {
 		})
 	})
 
-	it('should response to GET /v1/link with no url sent with a 400 status code', () => {
+	it('should respond to GET /v1/link with no url sent with a 400 status code', () => {
 		return request(app)
 		.get('/v1/link')
 		.then( res => {
@@ -67,7 +67,7 @@ describe('POST /v1/link', () => {
 		})
 	})
 
-	it('should response to POST /v1/links with a shortened link', () => {
+	it('should respond to POST /v1/links with a shortened link', () => {
 		return request(app)
 		.post('/v1/link')
 		.send({
@@ -80,7 +80,7 @@ describe('POST /v1/link', () => {
 		})
 	})
 
-	it('should response to POST /v1/links with no url sent with a 400 status code', () => {
+	it('should respond to POST /v1/links with no url sent with a 400 status code', () => {
 		return request(app)
 		.post('/v1/link')
 		.then( res => {
@@ -97,7 +97,7 @@ describe('DELETE /v1/link', () => {
 		.send({
 			url: 'https://www.google.com'
 		})
-		.then(() => {	
+		.then((res) => {	
 			return request(app)
 			.post('/v1/link')
 			.send({
@@ -108,22 +108,22 @@ describe('DELETE /v1/link', () => {
 
 	after(() => {
 		return request(app)
-		.delete('/v1/link')
-		.send({
+		.del('/v1/link')
+		.query({
 			url: 'https://www.google.com'
-		}).then(() => {
+		}).then((res) => {
 			return request(app)
-			.delete('/v1/link')
-			.send({
+			.del('/v1/link')
+			.query({
 				url: 'https://www.facebook.com'
 			})			
 		})
 	})
 
-	it('should response to DELETE /v1/link with an empty object', () => {
+	it('should respond to DELETE /v1/link with allLinks object without deleted link', () => {
 		return request(app)
-		.delete('/v1/link')
-		.send({
+		.del('/v1/link')
+		.query({
 			url: 'https://www.google.com'
 		})
 		.then( res => {
@@ -133,9 +133,9 @@ describe('DELETE /v1/link', () => {
 		})
 	})
 
-	it('should response to POST /v1/delete with no url sent with a 400 status code', () => {
+	it('should respond to POST /v1/delete with no url sent with a 400 status code', () => {
 		return request(app)
-		.delete('/v1/link')
+		.del('/v1/link')
 		.then( res => {
 			expect(res.text).to.equal('URL is missing from the request.')
 			expect(res.statusCode).to.equal(400)
@@ -161,26 +161,26 @@ describe('GET /v1/allLinks', () => {
 
 	after(() => {
 		return request(app)
-		.delete('/v1/link')
-		.send({
+		.del('/v1/link')
+		.query({
 			url: 'https://www.google.com'
 		}).then(() => {
 			return request(app)
-			.delete('/v1/link')
-			.send({
+			.del('/v1/link')
+			.query({
 				url: 'https://www.facebook.com'
 			})			
 		})
 	})
 
-	it('should response to GET /v1/allLinks with a shortened link', () => {
+	it('should respond to GET /v1/allLinks with a shortened link', () => {
 		return request(app)
 		.get('/v1/allLinks')
 		.then( res => {
 			data = JSON.parse(res.text)
 			expect(data.allLinks).to.deep.equal({
 				"https://www.facebook.com": "https://short.ly/QKZJ3",
-      			"https://www.google.com": "https://short.ly/mBaRj"
+     			"https://www.google.com": "https://short.ly/mBaRj"
   			})
 			expect(res.statusCode).to.equal(200)
 		})
