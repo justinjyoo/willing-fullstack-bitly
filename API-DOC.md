@@ -17,7 +17,7 @@ GET /v1/link
 
 |Name|Type|Description|
 |---|---|---|
-|url|string|Hashed URL to retrieve.|
+|url|string|Hashed short.ly URL.|
 
 ```json
 {
@@ -45,7 +45,7 @@ POST /v1/link
 
 |Name|Type|Description|
 |---|---|---|
-|url|string|Longform URL to delete.|
+|url|string|Longform URL to hash.|
 
 ```json
 {
