@@ -9,8 +9,9 @@ URl Shortener Full-stack app demo
 
 ## Usage
 
-Run the following script from within the root directory to start the server and application:
+Run the following scripts in the order specified below from within the root directory to start the server and application:
 ```
+npm install
 npm start
 ```
 
