@@ -96,3 +96,7 @@ button {
 button:hover {
 	background: #007849;
 }
+
+button:focus {
+  outline: none;
+}

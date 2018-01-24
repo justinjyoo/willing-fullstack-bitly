@@ -59,7 +59,7 @@ class InputBar extends Component {
 		} else if (inputtedURL.substr(0, 8) === 'short.ly' && inputtedURL.length === 22){
 			this.redirect('https://' + inputtedURL);
 		} else {
-			if(inputtedURL.length > 0 || inputtedURL !== 'Enter your link') {
+			if(inputtedURL.length > 0 && inputtedURL !== 'Enter your link') {
 				this.setState({formClassName: 'error clicked'})
 			} else {
 				this.setState({formClassName: 'error notClicked'})
