@@ -18,7 +18,7 @@ GET /v1/link
 Status: 200 OK
 
 {
-    "longLink": "https://facebook.com"
+    "longLink": "https://www.facebook.com"
 }
 ```
 
@@ -36,7 +36,7 @@ POST /v1/link
 
 ```json
 {
-  "url": "https://short.ly/4pNGR"
+  "url": "https://www.facebook.com"
 }
 ```
 
