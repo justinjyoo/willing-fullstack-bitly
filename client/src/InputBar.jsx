@@ -47,7 +47,7 @@ class InputBar extends Component {
 
 	onClickSubmit() {
 		const inputtedURL = this.state.inputValue;
-		if(inputtedURL.substr(0, 8) === 'https://'){
+		if(inputtedURL.substr(0, 8) === 'https://' && inputtedURL.substr(0, 16) !== 'https://short.ly'){
 			 this.props.createShortURL(inputtedURL).then( res => {
 			 	this.setState({
 			 		'inputValue': res,

@@ -29837,7 +29837,7 @@ var InputBar = function (_Component) {
 			var _this2 = this;
 
 			var inputtedURL = this.state.inputValue;
-			if (inputtedURL.substr(inputtedURL.length - 4, 4) === '.com' && inputtedURL.substr(0, 8) === 'https://') {
+			if (inputtedURL.substr(0, 8) === 'https://' && inputtedURL.substr(0, 16) !== 'https://short.ly') {
 				this.props.createShortURL(inputtedURL).then(function (res) {
 					_this2.setState({
 						'inputValue': res,
