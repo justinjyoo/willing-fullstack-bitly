@@ -36,7 +36,7 @@ POST /v1/link
 
 ```json
 {
-  "url": "https://www.facebook.com"
+  "url": "https://short.ly/4pNGR"
 }
 ```
 
