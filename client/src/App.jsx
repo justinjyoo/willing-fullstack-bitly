@@ -8,15 +8,15 @@ export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			linksList: {}
+			allLinks: {}
 		}
 	}
 
 	componentDidMount() {
 		axios.get('/v1/allLinks')
 		.then((res) => {
-			this.setState({linksList: res.data}, () => {
-				console.log('Links in storage: ', res.data)
+			this.setState({allLinks: res.data.allLinks}, () => {
+				console.log('Links in storage: ', res.data.allLinks)
 			})
 		})
 		.catch((err) => {
@@ -24,13 +24,13 @@ export default class App extends Component {
 		})
 	}
 
-	async createShortURL(url) {
+	createShortURL(url) {
 		 return axios.post('/v1/link', {
 			'url': url
 		})
 		.then((res) => {
-			this.setState({linksList: res.data.linksList}, () => {
-				console.log(this.state.linksList)
+			this.setState({allLinks: res.data.allLinks}, () => {
+				console.log('Links in storage: ', res.data.allLinks)
 			})
 			return res.data.addedLink;
 		})
@@ -40,12 +40,12 @@ export default class App extends Component {
 		})
 	}
 
-	async deleteURL(url) {
-		return axios.post('/v1/delete', {
-			'url': url
+	deleteURL(url) {
+		return axios.delete('/v1/link', {
+			params: {'url': url}
 		})
 		.then((res) => {
-			this.setState({linksList: res.data}, () => {
+			this.setState({allLinks: res.data.allLinks}, () => {
 				console.log('Links in storage: ', res.data)
 			})
 			return res.data.addedLink;
@@ -61,7 +61,7 @@ export default class App extends Component {
     		<div className={'container'} >
     			<h1> Welcome to short.ly! </h1>
         		<InputBar createShortURL={this.createShortURL.bind(this)} />
-        		<LinksList deleteURL={this.deleteURL.bind(this)} linksList={this.state.linksList} />
+        		<LinksList deleteURL={this.deleteURL.bind(this)} allLinks={this.state.allLinks} />
         	</div>
         )
     }

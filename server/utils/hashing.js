@@ -13,10 +13,13 @@ let urlCount = 1000000;
 
 const hashURL = (url) => {
 	if( websiteToShortURLCache[url] === undefined ) {
-		return {addedLink: updateURL(url), linksList: websiteToShortURLCache};
+		const hashedURL = updateURL(url);
+		websiteToShortURLCache[url] = hashedURL;
+		shortURLtoWebsiteCache[hashedURL] = url;
+		return {addedLink: hashedURL, allLinks: websiteToShortURLCache};
 	}
 
-	return {addedLink: websiteToShortURLCache[url], linksList: websiteToShortURLCache};
+	return {addedLink: websiteToShortURLCache[url], allLinks: websiteToShortURLCache};
 }
 
 const destroyURL = (url) => {

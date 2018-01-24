@@ -6,8 +6,8 @@ function LinksList(props) {
 	return (
 		<ul>
 			{
-				Object.keys(props.linksList).map( (longLink) => {
-					return <Link key={longLink} deleteURL={props.deleteURL} longLink={longLink} shortLink={props.linksList[longLink]} />
+				Object.keys(props.allLinks).map( (longLink) => {
+					return <Link key={longLink} deleteURL={props.deleteURL} longLink={longLink} shortLink={props.allLinks[longLink]} />
 				})
 			}
 

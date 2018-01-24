@@ -31,9 +31,13 @@ app.get('/', (req, res) => {
 })
 
 app.get('/v1/link', async (req, res) => {
+	if(!req.query.url) {
+		res.status(400).send('URL is missing from the request.');
+		return;
+	} 
+
 	const longLink = await utils.getURL(req.query.url)
-	console.log(req, longLink)
-	res.status(200).send(longLink)
+	res.status(200).send({"longLink": longLink})
 })
 
 app.post('/v1/link', async (req, res) => {
@@ -43,24 +47,23 @@ app.post('/v1/link', async (req, res) => {
 	} 
 
 	try {
-		const shortenedURL = await utils.hashURL(req.body.url);
-		res.status(201).send(shortenedURL);
+		const hashedDataAndStore = await utils.hashURL(req.body.url);
+		res.status(201).send(hashedDataAndStore);
 		return;
 	} catch (e) {
 		res.status(502).send('Bad gateway: there is a problem with the server.');
 	}
 })
 
-app.post('/v1/delete', async (req, res) => {
-	if(!req.body.url) {
+app.delete('/v1/link', async (req, res) => {
+	if(!req.query.url) {
 		res.status(400).send('URL is missing from the request.');
 		return;
 	} 
 
 	try {
-		const allLinks = await utils.destroyURL(req.body.url);
-		console.log('allLinks delete', allLinks)
-		res.status(201).send(allLinks);
+		const allLinks = await utils.destroyURL(req.query.url);
+		res.status(202).send({"allLinks": allLinks});
 		return;
 	} catch (e) {
 		res.status(502).send('Bad gateway: there is a problem with the server.');
@@ -68,10 +71,9 @@ app.post('/v1/delete', async (req, res) => {
 })
 
 app.get('/v1/allLinks', async (req, res) => {
-	console.log('get all links')
 	try{
 		const allLinks = await utils.checkCurrentCache()
-		res.status(200).send(allLinks)
+		res.status(200).send({"allLinks": allLinks})
 	} catch (e) {
 		res.status(502).send('Bad gateway: there is a problem with the server.');
 	}

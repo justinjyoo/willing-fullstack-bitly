@@ -28774,8 +28774,6 @@ __webpack_require__(409);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -28791,7 +28789,7 @@ var App = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
 		_this.state = {
-			linksList: {}
+			allLinks: {}
 		};
 		return _this;
 	}
@@ -28802,8 +28800,8 @@ var App = function (_Component) {
 			var _this2 = this;
 
 			_axios2.default.get('/v1/allLinks').then(function (res) {
-				_this2.setState({ linksList: res.data }, function () {
-					console.log('Links in storage: ', res.data);
+				_this2.setState({ allLinks: res.data.allLinks }, function () {
+					console.log('Links in storage: ', res.data.allLinks);
 				});
 			}).catch(function (err) {
 				console.log(err);
@@ -28811,76 +28809,38 @@ var App = function (_Component) {
 		}
 	}, {
 		key: 'createShortURL',
-		value: function () {
-			var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(url) {
-				var _this3 = this;
+		value: function createShortURL(url) {
+			var _this3 = this;
 
-				return regeneratorRuntime.wrap(function _callee$(_context) {
-					while (1) {
-						switch (_context.prev = _context.next) {
-							case 0:
-								return _context.abrupt('return', _axios2.default.post('/v1/link', {
-									'url': url
-								}).then(function (res) {
-									_this3.setState({ linksList: res.data.linksList }, function () {
-										console.log(_this3.state.linksList);
-									});
-									return res.data.addedLink;
-								}).catch(function (err) {
-									console.log(err);
-									return err;
-								}));
-
-							case 1:
-							case 'end':
-								return _context.stop();
-						}
-					}
-				}, _callee, this);
-			}));
-
-			function createShortURL(_x) {
-				return _ref.apply(this, arguments);
-			}
-
-			return createShortURL;
-		}()
+			return _axios2.default.post('/v1/link', {
+				'url': url
+			}).then(function (res) {
+				_this3.setState({ allLinks: res.data.allLinks }, function () {
+					console.log('Links in storage: ', res.data.allLinks);
+				});
+				return res.data.addedLink;
+			}).catch(function (err) {
+				console.log(err);
+				return err;
+			});
+		}
 	}, {
 		key: 'deleteURL',
-		value: function () {
-			var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(url) {
-				var _this4 = this;
+		value: function deleteURL(url) {
+			var _this4 = this;
 
-				return regeneratorRuntime.wrap(function _callee2$(_context2) {
-					while (1) {
-						switch (_context2.prev = _context2.next) {
-							case 0:
-								return _context2.abrupt('return', _axios2.default.post('/v1/delete', {
-									'url': url
-								}).then(function (res) {
-									_this4.setState({ linksList: res.data }, function () {
-										console.log('Links in storage: ', res.data);
-									});
-									return res.data.addedLink;
-								}).catch(function (err) {
-									console.log(err);
-									return err;
-								}));
-
-							case 1:
-							case 'end':
-								return _context2.stop();
-						}
-					}
-				}, _callee2, this);
-			}));
-
-			function deleteURL(_x2) {
-				return _ref2.apply(this, arguments);
-			}
-
-			return deleteURL;
-		}()
+			return _axios2.default.delete('/v1/link', {
+				params: { 'url': url }
+			}).then(function (res) {
+				_this4.setState({ allLinks: res.data.allLinks }, function () {
+					console.log('Links in storage: ', res.data);
+				});
+				return res.data.addedLink;
+			}).catch(function (err) {
+				console.log(err);
+				return err;
+			});
+		}
 	}, {
 		key: 'render',
 		value: function render() {
@@ -28893,7 +28853,7 @@ var App = function (_Component) {
 					' Welcome to short.ly! '
 				),
 				_react2.default.createElement(_InputBar2.default, { createShortURL: this.createShortURL.bind(this) }),
-				_react2.default.createElement(_LinksList2.default, { deleteURL: this.deleteURL.bind(this), linksList: this.state.linksList })
+				_react2.default.createElement(_LinksList2.default, { deleteURL: this.deleteURL.bind(this), allLinks: this.state.allLinks })
 			);
 		}
 	}]);
@@ -29858,11 +29818,14 @@ var InputBar = function (_Component) {
 		value: function onURLChange(event) {
 			var userInput = event.target.value;
 
+			// pre-fill input with "https://" for the user if the input is empty
 			if (this.state.inputValue.length === 0 && userInput.length < 2) {
 				this.setState({ inputValue: 'https://' + userInput });
+				// if we detect a short.ly URL, change button to show "Go"
 			} else if (userInput.substr(0, 17) === 'https://short.ly/' && userInput.length === 22) {
 				this.setState({ isShortly: true });
 				this.setState({ inputValue: userInput });
+				// keep button to show "Submit"
 			} else {
 				this.setState({ isShortly: false });
 				this.setState({ inputValue: userInput });
@@ -29881,12 +29844,12 @@ var InputBar = function (_Component) {
 						'isShortly': true
 					});
 				});
-			} else if (inputtedURL.substr(0, 16) === 'https://short.ly') {
+			} else if (inputtedURL.substr(0, 16) === 'https://short.ly' && inputtedURL.length === 22) {
 				this.redirect(inputtedURL);
-			} else if (inputtedURL.substr(0, 8) === 'short.ly') {
+			} else if (inputtedURL.substr(0, 8) === 'short.ly' && inputtedURL.length === 22) {
 				this.redirect('https://' + inputtedURL);
 			} else {
-				if (inputtedURL.length > 0) {
+				if (inputtedURL.length > 0 || inputtedURL !== 'Enter your link') {
 					this.setState({ formClassName: 'error clicked' });
 				} else {
 					this.setState({ formClassName: 'error notClicked' });
@@ -29910,7 +29873,7 @@ var InputBar = function (_Component) {
 				}
 			}).then(function (res) {
 				console.log(res);
-				window.location = res.data;
+				window.location = res.data.longLink;
 			}).catch(function (err) {
 				console.log(err);
 			});
@@ -31534,8 +31497,8 @@ function LinksList(props) {
 	return _react2.default.createElement(
 		'ul',
 		null,
-		Object.keys(props.linksList).map(function (longLink) {
-			return _react2.default.createElement(_Link2.default, { key: longLink, deleteURL: props.deleteURL, longLink: longLink, shortLink: props.linksList[longLink] });
+		Object.keys(props.allLinks).map(function (longLink) {
+			return _react2.default.createElement(_Link2.default, { key: longLink, deleteURL: props.deleteURL, longLink: longLink, shortLink: props.allLinks[longLink] });
 		})
 	);
 }

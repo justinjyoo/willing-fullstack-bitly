@@ -31,11 +31,14 @@ class InputBar extends Component {
 	onURLChange(event) {
 		const userInput = event.target.value
 
+		// pre-fill input with "https://" for the user if the input is empty
 		if(this.state.inputValue.length === 0 && userInput.length < 2) {
 			this.setState({inputValue: 'https://' + userInput})
+		// if we detect a short.ly URL, change button to show "Go"
 		} else if(userInput.substr(0, 17) === 'https://short.ly/' && userInput.length === 22) {
 			this.setState({isShortly: true})
 			this.setState({inputValue: userInput})
+		// keep button to show "Submit"
 		} else {
 			this.setState({isShortly: false})
 			this.setState({inputValue: userInput})
@@ -51,12 +54,12 @@ class InputBar extends Component {
 			 		'isShortly': true
 			 	}) 
 			 })
-		} else if(inputtedURL.substr(0, 16) === 'https://short.ly'){
+		} else if(inputtedURL.substr(0, 16) === 'https://short.ly' && inputtedURL.length === 22){
 			this.redirect(inputtedURL);
-		} else if (inputtedURL.substr(0, 8) === 'short.ly'){
+		} else if (inputtedURL.substr(0, 8) === 'short.ly' && inputtedURL.length === 22){
 			this.redirect('https://' + inputtedURL);
 		} else {
-			if(inputtedURL.length > 0) {
+			if(inputtedURL.length > 0 || inputtedURL !== 'Enter your link') {
 				this.setState({formClassName: 'error clicked'})
 			} else {
 				this.setState({formClassName: 'error notClicked'})
@@ -79,7 +82,7 @@ class InputBar extends Component {
 		})
 		.then( res => {
 			console.log(res)
-			window.location = res.data
+			window.location = res.data.longLink
 		})
 		.catch( err => {
 			console.log(err)
