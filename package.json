@@ -15,7 +15,7 @@
   "main": "client/app.js",
   "scripts": {
     "start": "npm run open",
-    "open": "concurrently \"npm install\" \"node ./server/server.js\" \"opener http://localhost:8889\"",
+    "open": "concurrently \"node ./server/server.js\" \"opener http://localhost:8889\"",
     "test": "mocha tests/server.js",
     "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack/webpack.dev.config.js"
   },
