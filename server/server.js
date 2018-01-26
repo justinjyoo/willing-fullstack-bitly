@@ -15,7 +15,7 @@ app.use(express.static(path.resolve(PARENT_DIR)));
 // parse data as JSON
 app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 // log all request in the Apache combined format to STDOUT
 // app.use(morgan('combined'));
 
